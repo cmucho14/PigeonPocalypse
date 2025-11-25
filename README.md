@@ -3,7 +3,7 @@
 CS583 Final Projection
 
 #Names of group members
-Emily Stratoudis, Brody Armstrong
+Emily Stratoudis, Brody Armstrong, Carson Mucho, Lachlan Carlsen
 
 #DESCRIPTION OF CURRENT TARGET
 Create 3d wave based survival action game with a controllable player that fights through progressively harder waves of enemies across different biomes. Core loop is revolved around fast-pace combat, character abilities, and long-term progression through XP and upgrades.
