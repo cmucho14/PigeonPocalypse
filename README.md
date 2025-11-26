@@ -87,3 +87,5 @@ Lachlan Carlsen — Art & Level Design
 - [ ] Enemy visual variants
 - [ ] Environmental hazards/obstacles
 
+Video Link:
+[https://youtu.be/UmZjzr7xKOM](https://youtu.be/UmZjzr7xKOM)
