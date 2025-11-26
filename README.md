@@ -1,29 +1,89 @@
+# PigeonPocalypse
+CS 583 Final Project 3D Game
 
-# PigeonPocalypse 
-CS583 Final Projection
+A 3D wave-based survival action game where players fight through progressively harder waves of pigeon enemies in a park arena.
 
-#Names of group members
-Emily Stratoudis, Brody Armstrong, Carson Mucho, Lachlan Carlsen
 
-#DESCRIPTION OF CURRENT TARGET
-Create 3d wave based survival action game with a controllable player that fights through progressively harder waves of enemies across different biomes. Core loop is revolved around fast-pace combat, character abilities, and long-term progression through XP and upgrades.
+Team Members
 
-The game takes place on even-ground arena - starting with a park surrounded by buildings
 
-The waves of enemies progressively increase in difficulty. Main type of enemy with low health spawn that all target the player. Gets more difficult over time with health, speed, damage, and spawn rate. Boss mobs spawn every so many rounds of waves?
+Brody Armstrong | Player Design & Movement 
+Carson Mucho | Enemy AI & Combat Systems 
+Emily Stratoudis | UI/UX Design 
+Lachlan Carlsen | Art & Level Design 
 
-Combat features: One character very basic weapon type to start progressively gain loot from random chests and a trader that have equipment that have different attack types and do more damage. (td: Approach for progressively better gear)
 
-Players gain XP by killing mobs and getting to end of waves. XP gets you level ups giving you skill points that you can spend on upgrading different attributes. Temporary power ups?
+Game Description
 
-In game hud with health, xp level, inventory tab to see stats and equipment
+Overview
+PigeonPocalypse is a fast-paced 3D survival game where players battle waves of increasingly aggressive pigeons in a park setting. The core gameplay loop revolves around:
+Wave-based survival — Fight through progressively harder enemy waves
+Character progression — Earn XP, level up, and unlock upgrades
+Combat — Use weapons and abilities to defeat enemies
 
-#Roles
--Brody:
-  -Project Lead/Game Design
--Carson:
-  -Scripting enemy AI 
--Emily:
-  -UI/UX design
--Lachlan: 
-  -Art and Level design
+Setting
+The game takes place in an urban park arena surrounded by buildings. Players must survive against swarms of pigeon enemies that grow stronger with each wave.
+
+Enemy System
+- Pigeon enemies spawn in waves and aggressively chase the player
+- Difficulty scales over time: increased health, speed, damage, and spawn rate
+- Enemies use NavMesh pathfinding to intelligently pursue the player
+- Boss pigeons spawn at milestone waves (planned)
+
+Combat & Progression
+- Players start with basic attacks and gain better equipment over time
+- XP earned from defeating enemies and surviving waves
+- Level ups grant skill points for upgrading attributes
+- Loot system with chests and trader NPCs (planned)
+
+HUD & UI
+- Health bar display
+- XP and level indicator
+- Inventory system for stats and equipment (planned)
+
+Implemented Features
+- [x] Main menu with working Play/Quit buttons
+- [x] End screen with Retry/Main Menu buttons
+- [x] Playable character (CowboyRIO) with WASD movement and jumping
+- [x] Player rotates to face movement direction
+- [x] Camera follows player
+- [x] Health system with damage and death
+- [x] Enemy AI that chases player using NavMesh
+- [x] Enemy attacks player when in range
+- [x] Park environment with low-poly assets
+- [x] Scene flow: Start Menu → Game → End Screen
+
+Assets Integrated
+- CowboyRIO player character
+- Pigeon enemy model
+- Low Poly Environment Park (trees, benches, fountains)
+- Rocks and Terrains Pack
+- Custom fonts and UI elements
+
+Member Goals
+
+Brody Armstrong — Player Design
+- [ ] Player attack/combat system
+- [ ] Weapon equipping and switching
+- [ ] Player animations
+- [ ] Dodge/roll mechanic
+
+Carson Mucho — Enemy AI & Combat
+- [ ] Wave spawning system
+- [ ] Difficulty scaling per wave
+- [ ] Boss enemy variants
+- [ ] Enemy death effects/drops
+
+Emily Stratoudis — UI/UX Design
+- [ ] In-game HUD (health bar, XP display)
+- [ ] Inventory/equipment UI
+- [ ] Wave counter display
+- [ ] Pause menu
+- [ ] Settings menu
+
+Lachlan Carlsen — Art & Level Design
+- [ ] Additional biomes/arenas
+- [ ] Visual effects (particles, lighting)
+- [ ] Enemy visual variants
+- [ ] Environmental hazards/obstacles
+
