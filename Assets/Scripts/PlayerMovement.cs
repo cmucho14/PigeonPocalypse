@@ -5,14 +5,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 5f;
     public float jumpForce = 8f;
+    public float rotationSpeed = 10f;
     
     [Header("Ground Check")]
-    public float groundCheckDistance = 0.1f;
+    public float groundCheckRadius = 0.3f;
+    public float groundCheckDistance = 0.2f;
     public LayerMask groundLayer;
     
     private Rigidbody rb;
-    private Transform model;
-    private Vector3 baseScale;
     private bool isGrounded;
     
     void Awake()
@@ -22,22 +22,11 @@ public class PlayerMovement : MonoBehaviour
         if (rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody>();
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
-            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
         
-        // Find the visual model (mesh renderer child)
-        var mr = GetComponentInChildren<MeshRenderer>();
-        if (mr != null)
-        {
-            model = mr.transform;
-            baseScale = model.localScale;
-        }
-        else
-        {
-            model = transform;
-            baseScale = transform.localScale;
-        }
+        // Lock rotation so physics doesn't spin the player
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         
         // Add a collider if missing
         if (GetComponent<Collider>() == null)
@@ -55,42 +44,43 @@ public class PlayerMovement : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         
-        // Check if grounded
-        isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, groundCheckDistance + 0.1f, groundLayer);
+        // Ground check using SphereCast for reliability
+        isGrounded = CheckGrounded();
         
-        // If no ground layer set, use simple check
-        if (groundLayer == 0)
-        {
-            isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, groundCheckDistance + 0.1f);
-        }
-        
-        // Movement
+        // Movement direction
         Vector3 movement = new Vector3(horizontal, 0f, vertical).normalized;
-        rb.velocity = new Vector3(movement.x * moveSpeed, rb.velocity.y, movement.z * moveSpeed);
+        
+        // Apply movement
+        Vector3 velocity = movement * moveSpeed;
+        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+        
+        // Rotate player to face movement direction
+        if (movement.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(movement, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
         
         // Jump
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
         }
-        
-        // Flip sprite based on direction
-        if (horizontal != 0)
-        {
-            FlipModel(horizontal > 0);
-        }
     }
     
-    void FlipModel(bool facingRight)
+    bool CheckGrounded()
     {
-        if (model == null) return;
+        // Cast a sphere downward to check for ground
+        Vector3 origin = transform.position + Vector3.up * 0.5f;
         
-        float sign = facingRight ? 1f : -1f;
-        model.localScale = new Vector3(
-            Mathf.Abs(baseScale.x) * sign,
-            baseScale.y,
-            baseScale.z
-        );
+        if (groundLayer != 0)
+        {
+            return Physics.SphereCast(origin, groundCheckRadius, Vector3.down, out RaycastHit hit, groundCheckDistance + 0.5f, groundLayer);
+        }
+        else
+        {
+            // If no ground layer set, check against everything
+            return Physics.SphereCast(origin, groundCheckRadius, Vector3.down, out RaycastHit hit, groundCheckDistance + 0.5f);
+        }
     }
 }
-
