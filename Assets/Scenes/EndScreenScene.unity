@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSceneName: TestMap
-  mainMenuSceneName: MainMenu
+  mainMenuSceneName: StartMenuScene
   wavesText: {fileID: 0}
   enemiesText: {fileID: 0}
   xpText: {fileID: 0}

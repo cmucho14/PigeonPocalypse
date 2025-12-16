@@ -4,8 +4,8 @@ using TMPro;
 
 public class EndScreenUI : MonoBehaviour
 {
-    public string gameSceneName = "Game";
-    public string mainMenuSceneName = "MainMenu";
+    public string gameSceneName = "TestMap";
+    public string mainMenuSceneName = "StartMenuScene";
 
     [Header("Stats")]
     public TextMeshProUGUI wavesText;
@@ -14,25 +14,20 @@ public class EndScreenUI : MonoBehaviour
 
     public void SetStats(int waves, int enemies, int xp)
     {
-        if (wavesText)    wavesText.text    = $"Waves Survived: {waves}";
-        if (enemiesText)  enemiesText.text  = $"Enemies Defeated: {enemies}";
-        if (xpText)       xpText.text       = $"XP Earned: {xp}";
+        if (wavesText)   wavesText.text   = $"Waves Survived: {waves}";
+        if (enemiesText) enemiesText.text = $"Enemies Defeated: {enemies}";
+        if (xpText)      xpText.text      = $"XP Earned: {xp}";
     }
 
     public void OnRetryClicked()
     {
+        Time.timeScale = 1f;                 // important if you paused on death
         SceneManager.LoadScene(gameSceneName);
-    }
-
-    public void OnUpgradesClicked()
-    {
-        // later, go to upgrades scene
     }
 
     public void OnMainMenuClicked()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(mainMenuSceneName);
     }
 }
-
-

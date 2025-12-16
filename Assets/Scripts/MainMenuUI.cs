@@ -4,11 +4,12 @@ using UnityEngine.SceneManagement;
 public class MainMenuUI : MonoBehaviour
 {
     [Header("Scene Names")]
-    public string gameSceneName = "Game";       // your main play scene
-    public string upgradesSceneName = "Upgrades"; // optional, if you have one
+    public string gameSceneName = "TestMap";
+    public string upgradesSceneName = ""; // you don't have this yet
 
     public void OnPlayClicked()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(gameSceneName);
     }
 
@@ -22,7 +23,6 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnSettingsClicked()
     {
-        // TODO: open settings panel later
         Debug.Log("Settings clicked");
     }
 
