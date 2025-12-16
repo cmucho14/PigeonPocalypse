@@ -91,6 +91,12 @@ public class WaveSpawnerBox : MonoBehaviour
 
                 agent.Warp(spawnPos); // guarantees on-mesh
             }
+         
+            EnemyStats stats = enemy.GetComponent<EnemyStats>();
+            if (stats != null)
+            {
+                stats.ApplyWaveStats(currentWaveIndex);
+            }
 
             enemiesAlive++;
 
