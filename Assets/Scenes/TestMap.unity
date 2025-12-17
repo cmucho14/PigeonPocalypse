@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028301, g: 0.22571309, b: 0.30692127, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028326, g: 0.22571333, b: 0.30692202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -599,6 +599,11 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
+  animator: {fileID: 876381700}
+  speedParam: Speed
+  directionXParam: DirectionX
+  directionYParam: DirectionY
+  attackTrigger: Attack
 --- !u!4 &369454438 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3833715676058777156, guid: e792b5f59bf315845ab4fbb393f59b18,
@@ -995,6 +1000,12 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6990060088367560311, guid: 02a2f7ba4ef86f44fb59e378f566e68f, type: 3}
+--- !u!95 &876381700 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9040396849666395112, guid: e792b5f59bf315845ab4fbb393f59b18,
+    type: 3}
+  m_PrefabInstance: {fileID: 369454434}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &961739749
 GameObject:
   m_ObjectHideFlags: 0
