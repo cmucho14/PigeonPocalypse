@@ -1,0 +1,65 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+public class BossSpawner : MonoBehaviour
+{
+    [Header("References")]
+    public WaveSpawnerBox waveSpawner;     // drag your EnemySpawner object here
+    public GameObject bossPrefab;          // your boss prefab
+
+    [Header("Spawn")]
+    public Transform spawnPoint;           // optional (can leave null)
+    public float navMeshSampleRadius = 5f;
+
+    private bool spawned;
+
+    void Awake()
+    {
+        if (waveSpawner == null)
+            waveSpawner = FindObjectOfType<WaveSpawnerBox>();
+    }
+
+    void OnEnable()
+    {
+        if (waveSpawner != null)
+            waveSpawner.onAllWavesComplete += SpawnBoss;
+    }
+
+    void OnDisable()
+    {
+        if (waveSpawner != null)
+            waveSpawner.onAllWavesComplete -= SpawnBoss;
+    }
+
+    void SpawnBoss()
+    {
+        if (spawned) return;
+        spawned = true;
+
+        if (bossPrefab == null)
+        {
+            Debug.LogError("BossSpawner: bossPrefab not assigned.");
+            return;
+        }
+
+        Vector3 desired = spawnPoint != null ? spawnPoint.position : transform.position;
+
+        // snap to navmesh so the boss always moves
+        if (NavMesh.SamplePosition(desired, out NavMeshHit hit, navMeshSampleRadius, NavMesh.AllAreas))
+            desired = hit.position;
+
+        GameObject boss = Instantiate(bossPrefab, desired, Quaternion.identity);
+
+        // force agent placement if present
+        var agent = boss.GetComponent<NavMeshAgent>();
+        if (agent != null)
+        {
+            agent.enabled = false;
+            boss.transform.position = desired;
+            agent.enabled = true;
+            agent.Warp(desired);
+        }
+
+        Debug.Log("[BossSpawner] Boss spawned!");
+    }
+}
