@@ -12,6 +12,13 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckDistance = 0.2f;
     public LayerMask groundLayer;
     
+    [Header("Animation")]
+    public Animator animator;
+    public string speedParam = "Speed";
+    public string directionXParam = "DirectionX";
+    public string directionYParam = "DirectionY";
+    public string attackTrigger = "Attack";
+    
     private Rigidbody rb;
     private bool isGrounded;
     
@@ -36,6 +43,10 @@ public class PlayerMovement : MonoBehaviour
             col.radius = 0.5f;
             col.center = Vector3.up;
         }
+        
+        // Try to find Animator on this object or children if not assigned
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
     }
     
     void Update()
@@ -65,6 +76,28 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+        }
+        
+        // Attack input (left mouse button)
+        if (Input.GetMouseButtonDown(0) && animator != null)
+        {
+            animator.SetTrigger(attackTrigger);
+        }
+        
+        // Update animator parameters
+        if (animator != null)
+        {
+            // Calculate speed (horizontal movement magnitude)
+            float horizontalSpeed = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
+            animator.SetFloat(speedParam, horizontalSpeed);
+            
+            // Calculate direction relative to player's forward direction
+            // Convert world-space input to local space relative to player's rotation
+            Vector3 localMovement = transform.InverseTransformDirection(movement);
+            
+            // For 2D Blend Tree: X = left/right (-1 to 1), Y = forward/backward (-1 to 1)
+            animator.SetFloat(directionXParam, localMovement.x);
+            animator.SetFloat(directionYParam, localMovement.z);
         }
     }
     
