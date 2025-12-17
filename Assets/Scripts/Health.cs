@@ -6,20 +6,23 @@ public class Health : MonoBehaviour
     [HideInInspector] public float currentHealth;
 
     public System.Action onDeath;
+    public System.Action<float, float> onHealthChanged; // current, max
 
     private void Awake()
     {
         currentHealth = maxHealth;
+        onHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+
+        onHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0f)
-        {
             Die();
-        }
     }
 
     void Die()
@@ -28,4 +31,4 @@ public class Health : MonoBehaviour
         Destroy(gameObject);
     }
 }
-// balls
+

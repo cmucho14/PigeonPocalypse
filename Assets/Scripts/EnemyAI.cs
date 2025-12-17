@@ -12,11 +12,13 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private float lastAttackTime;
 
+    private EnemyPeckAnim peckAnim;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        peckAnim = GetComponentInChildren<EnemyPeckAnim>();
 
-        //Find whatever is tagged as "Player" to lock onto
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -31,13 +33,12 @@ public class EnemyAI : MonoBehaviour
     private void Update()
     {
         if (player == null) return;
+        if (!agent.isOnNavMesh) return;
 
-        //always move towards player
         agent.SetDestination(player.position);
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        //Attack attempt
         if (distanceToPlayer <= attackRange)
         {
             TryAttack();
@@ -51,7 +52,11 @@ public class EnemyAI : MonoBehaviour
 
         lastAttackTime = Time.time;
 
-        //Deal damage to player
+        // Play hop + peck animation
+        if (peckAnim != null)
+            peckAnim.Play();
+
+        // Deal damage
         Health playerHealth = player.GetComponent<Health>();
         if (playerHealth != null)
         {

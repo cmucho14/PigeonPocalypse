@@ -14,6 +14,10 @@ public class WaveSpawnerBox : MonoBehaviour
     [Header("Spawn Timing")]
     public float timeBetweenSpawns = 0.1f;
 
+    [Header("XP Rewards")]
+    public int xpPerKill = 5;
+    private PlayerXP playerXP;
+
     [Header("Tree Drop Settings")]
     public float raycastDownDistance = 200f;     // how far down we search for ground
     public LayerMask groundLayers = ~0;          // set to your ground layer if you want
@@ -34,6 +38,19 @@ public class WaveSpawnerBox : MonoBehaviour
 
     void Start()
     {
+        // Cache player XP once
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            playerXP = playerObj.GetComponent<PlayerXP>();
+            if (playerXP == null)
+                Debug.LogWarning("WaveSpawnerBox: Player found but missing PlayerXP component (XP won't increase).");
+        }
+        else
+        {
+            Debug.LogWarning("WaveSpawnerBox: No object with tag 'Player' found (XP won't increase).");
+        }
+
         if (enemyPrefab == null)
         {
             Debug.LogError("WaveSpawnerBox: enemyPrefab not assigned.");
@@ -92,12 +109,25 @@ public class WaveSpawnerBox : MonoBehaviour
                 agent.Warp(spawnPos); // guarantees on-mesh
             }
 
+            EnemyStats stats = enemy.GetComponent<EnemyStats>();
+            if (stats != null)
+            {
+                stats.ApplyWaveStats(currentWaveIndex);
+            }
+
             enemiesAlive++;
 
             Health h = enemy.GetComponent<Health>();
             if (h != null)
             {
-                h.onDeath += () => enemiesAlive--;
+                // When enemy dies: decrement alive count + give XP
+                h.onDeath += () =>
+                {
+                    enemiesAlive--;
+
+                    if (playerXP != null)
+                        playerXP.AddXP(xpPerKill);
+                };
             }
             else
             {
@@ -115,7 +145,6 @@ public class WaveSpawnerBox : MonoBehaviour
             Debug.LogWarning($"[WaveSpawner] Only spawned {spawned}/{count} enemies (couldn't find enough valid navmesh points).");
         }
     }
-
 
     bool TryGetSpawnPointOnNavMesh(out Vector3 navSpawn)
     {
