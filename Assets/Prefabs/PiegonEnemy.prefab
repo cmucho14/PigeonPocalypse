@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3727983371591125935}
   - component: {fileID: -2733458001294664580}
   - component: {fileID: 6746537947693744550}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PiegonEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,6 +185,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pigeon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749595368182456747, guid: 051a814d12e6f344091fa375787cef9e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9042186032730962066, guid: 051a814d12e6f344091fa375787cef9e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
