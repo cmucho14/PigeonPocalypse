@@ -647,6 +647,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 369454440}
+    - targetCorrespondingSourceObject: {fileID: 8702267591608313500, guid: e792b5f59bf315845ab4fbb393f59b18,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 369454441}
   m_SourcePrefab: {fileID: 100100000, guid: e792b5f59bf315845ab4fbb393f59b18, type: 3}
 --- !u!1 &369454435 stripped
 GameObject:
@@ -741,6 +745,19 @@ MonoBehaviour:
   level: 1
   xp: 0
   xpToNext: 80
+--- !u!114 &369454441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369454435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec42805783676346a16360ab5ab408a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageMultiplier: 1
 --- !u!1 &679376355
 GameObject:
   m_ObjectHideFlags: 0
@@ -3482,6 +3499,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5cd0ad272fab6419030c15959e30a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelUpPanel: {fileID: 87147249}
+  speedIncrease: 1
+  healthIncrease: 10
+  damageIncrease: 0.25
 --- !u!1 &1914621716
 GameObject:
   m_ObjectHideFlags: 0
