@@ -56,3 +56,4 @@ public class HUDUI : MonoBehaviour
         if (levelText) levelText.text = $"LEVEL {level}";
     }
 }
+    
