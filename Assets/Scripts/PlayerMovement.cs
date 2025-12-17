@@ -36,17 +36,59 @@ public class PlayerMovement : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         
         // Add a collider if missing
-        if (GetComponent<Collider>() == null)
+        Collider playerCollider = GetComponent<Collider>();
+        if (playerCollider == null)
         {
             var col = gameObject.AddComponent<CapsuleCollider>();
             col.height = 2f;
             col.radius = 0.5f;
             col.center = Vector3.up;
+            playerCollider = col;
         }
+        
+        // Ignore collisions with enemies so they don't push the player
+        IgnoreEnemyCollisions(playerCollider);
         
         // Try to find Animator on this object or children if not assigned
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
+    }
+    
+    void IgnoreEnemyCollisions(Collider playerCollider)
+    {
+        // Find all enemies and ignore collisions with them
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Collider[] enemyColliders = enemy.GetComponentsInChildren<Collider>();
+            foreach (Collider enemyCol in enemyColliders)
+            {
+                if (enemyCol != null && enemyCol != playerCollider)
+                {
+                    Physics.IgnoreCollision(playerCollider, enemyCol, true);
+                }
+            }
+        }
+        
+        // Also set up to ignore collisions with newly spawned enemies
+        // This will be called when enemies spawn
+    }
+    
+    // Call this method when new enemies are spawned to ignore collisions with them
+    public void IgnoreCollisionWithEnemy(GameObject enemy)
+    {
+        Collider playerCollider = GetComponent<Collider>();
+        if (playerCollider != null && enemy != null)
+        {
+            Collider[] enemyColliders = enemy.GetComponentsInChildren<Collider>();
+            foreach (Collider enemyCol in enemyColliders)
+            {
+                if (enemyCol != null)
+                {
+                    Physics.IgnoreCollision(playerCollider, enemyCol, true);
+                }
+            }
+        }
     }
     
     void Update()
