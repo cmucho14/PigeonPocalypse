@@ -542,7 +542,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8445928602005017885, guid: e792b5f59bf315845ab4fbb393f59b18, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -558,6 +559,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 369454439}
+    - targetCorrespondingSourceObject: {fileID: 8702267591608313500, guid: e792b5f59bf315845ab4fbb393f59b18,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 369454440}
   m_SourcePrefab: {fileID: 100100000, guid: e792b5f59bf315845ab4fbb393f59b18, type: 3}
 --- !u!1 &369454435 stripped
 GameObject:
@@ -632,6 +637,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &369454440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369454435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e12c6426be2cd7478d6acd38ec8f029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  xp: 0
+  xpToNext: 80
 --- !u!1 &679376355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1467,6 +1487,7 @@ MonoBehaviour:
     type: 3}
   enemiesPerWave: 0a000000140000001e000000
   timeBetweenSpawns: 0.5
+  xpPerKill: 5
   raycastDownDistance: 200
   groundLayers:
     serializedVersion: 2
@@ -2648,6 +2669,7 @@ GameObject:
   - component: {fileID: 1905240528}
   - component: {fileID: 1905240527}
   - component: {fileID: 1905240526}
+  - component: {fileID: 1905240530}
   m_Layer: 5
   m_Name: health bar canvas
   m_TagString: Untagged
@@ -2740,6 +2762,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1905240530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905240525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711966c3d82b5d6488a30da25cb96ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 1622436806}
+  xpBar: {fileID: 1499587022}
+  levelText: {fileID: 975240893}
 --- !u!1 &2111536467
 GameObject:
   m_ObjectHideFlags: 0
