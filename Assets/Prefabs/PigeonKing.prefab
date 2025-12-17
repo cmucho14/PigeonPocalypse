@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6331227971853157405}
   - component: {fileID: -2733458001294664580}
   - component: {fileID: 6746537947693744550}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PigeonKing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,6 +208,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crown
       objectReference: {fileID: 0}
+    - target: {fileID: 3033273108864270443, guid: 1e2193ab3a7eb184499ab33466e8f6f9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6562398283566368959, guid: 1e2193ab3a7eb184499ab33466e8f6f9,
         type: 3}
       propertyPath: m_Enabled
@@ -287,6 +292,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pigeon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8749595368182456747, guid: 051a814d12e6f344091fa375787cef9e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9042186032730962066, guid: 051a814d12e6f344091fa375787cef9e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
