@@ -16,6 +16,8 @@ public class PlayerAttack : MonoBehaviour
     [Header("Attack Detection")]
     public Transform attackPoint; // Optional: specific attack point (sword tip, etc.)
     public float attackRadius = 1.5f;
+    public float verticalCheckHeight = 3f; // How high to check above attack point (for tall enemies like boss)
+    public int verticalCheckCount = 3; // Number of vertical checks to make
     
     private GameObject swordInstance;
     private Animator animator;
@@ -143,50 +145,83 @@ public class PlayerAttack : MonoBehaviour
         if (Time.time - lastAttackTime < attackCooldown)
             return;
         
-        Vector3 checkPosition = attackPoint != null ? attackPoint.position : transform.position + transform.forward * attackRange;
+        Vector3 baseCheckPosition = attackPoint != null ? attackPoint.position : transform.position + transform.forward * attackRange;
         
-        // If enemyLayer is not set (all zeros), check all colliders (fallback)
-        int hitCount;
-        if (enemyLayer == 0)
-        {
-            // Fallback: check all colliders if layer mask isn't set
-            hitCount = Physics.OverlapSphereNonAlloc(checkPosition, attackRadius, hitEnemies);
-        }
-        else
-        {
-            // Find all enemies in range using layer mask
-            hitCount = Physics.OverlapSphereNonAlloc(checkPosition, attackRadius, hitEnemies, enemyLayer);
-        }
-        
+        // Check at multiple vertical heights to hit tall enemies like the boss
+        // This ensures we can hit the boss even if the attack point is at leg level
         bool hitAnyEnemy = false;
-        for (int i = 0; i < hitCount; i++)
+        System.Collections.Generic.HashSet<Collider> allHitColliders = new System.Collections.Generic.HashSet<Collider>();
+        
+        for (int heightCheck = 0; heightCheck < verticalCheckCount; heightCheck++)
         {
-            Collider enemyCollider = hitEnemies[i];
+            float heightOffset = (verticalCheckHeight / (verticalCheckCount - 1)) * heightCheck;
+            Vector3 checkPosition = baseCheckPosition + Vector3.up * heightOffset;
             
-            // Skip if null or already hit in this attack
-            if (enemyCollider == null || hitThisAttack.Contains(enemyCollider))
-                continue;
+            // Check all colliders at this height
+            int hitCount = Physics.OverlapSphereNonAlloc(checkPosition, attackRadius, hitEnemies);
             
-            // Skip if this is the player's own collider
-            if (enemyCollider.transform == transform || enemyCollider.transform.IsChildOf(transform))
-                continue;
+            // If enemyLayer is set, filter results, otherwise use all
+            bool useLayerFilter = enemyLayer != 0;
             
-            // Try to get Health component from the collider's GameObject or its parent
-            Health enemyHealth = enemyCollider.GetComponent<Health>();
-            if (enemyHealth == null)
+            for (int i = 0; i < hitCount; i++)
             {
-                // Try parent in case collider is on a child object
-                enemyHealth = enemyCollider.GetComponentInParent<Health>();
-            }
-            
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(attackDamage);
-                hitThisAttack.Add(enemyCollider); // Mark as hit
-                hitAnyEnemy = true;
-                Debug.Log($"Player hit {enemyCollider.name} for {attackDamage} damage! Enemy HP: {enemyHealth.currentHealth}/{enemyHealth.maxHealth}");
+                Collider enemyCollider = hitEnemies[i];
                 
-                // Optional: Add knockback or visual feedback here
+                // Skip if null or already hit in this attack
+                if (enemyCollider == null || hitThisAttack.Contains(enemyCollider) || allHitColliders.Contains(enemyCollider))
+                    continue;
+                
+                // Skip if this is the player's own collider
+                if (enemyCollider.transform == transform || enemyCollider.transform.IsChildOf(transform))
+                    continue;
+                
+                // If layer mask is set, check if this collider is on the enemy layer
+                if (useLayerFilter)
+                {
+                    int colliderLayer = 1 << enemyCollider.gameObject.layer;
+                    if ((colliderLayer & enemyLayer) == 0)
+                    {
+                        // Not on enemy layer, but still check if it has Health (for boss compatibility)
+                        // This allows hitting boss even if layer isn't set correctly
+                    }
+                }
+                
+                // Try to get Health component from the collider's GameObject or its parent
+                Health enemyHealth = enemyCollider.GetComponent<Health>();
+                if (enemyHealth == null)
+                {
+                    // Try parent in case collider is on a child object
+                    enemyHealth = enemyCollider.GetComponentInParent<Health>();
+                }
+                
+                // Also check if it's a boss by looking for BossAI component
+                if (enemyHealth == null)
+                {
+                    BossAI bossAI = enemyCollider.GetComponent<BossAI>();
+                    if (bossAI != null)
+                    {
+                        // Found boss, get Health from boss GameObject
+                        enemyHealth = bossAI.GetComponent<Health>();
+                        if (enemyHealth == null)
+                        {
+                            enemyHealth = bossAI.GetComponentInParent<Health>();
+                        }
+                    }
+                }
+                
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(attackDamage);
+                    hitThisAttack.Add(enemyCollider); // Mark as hit
+                    allHitColliders.Add(enemyCollider); // Track all hits this frame
+                    hitAnyEnemy = true;
+                    
+                    // Check if it's a boss for better logging
+                    string enemyType = enemyCollider.GetComponent<BossAI>() != null ? "BOSS" : "Enemy";
+                    Debug.Log($"Player hit {enemyType} {enemyCollider.name} for {attackDamage} damage! HP: {enemyHealth.currentHealth}/{enemyHealth.maxHealth}");
+                    
+                    // Optional: Add knockback or visual feedback here
+                }
             }
         }
         
