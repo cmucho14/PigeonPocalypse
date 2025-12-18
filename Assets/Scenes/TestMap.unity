@@ -22799,8 +22799,6 @@ SceneRoots:
   - {fileID: 331684864}
   - {fileID: 1436638701}
   - {fileID: 1980949348}
-<<<<<<< HEAD
-=======
   - {fileID: 1502623190}
   - {fileID: 711243958}
   - {fileID: 119317244}
@@ -22813,9 +22811,7 @@ SceneRoots:
   - {fileID: 1618764019}
   - {fileID: 637656802}
   - {fileID: 2357380}
->>>>>>> LevelDesign
   - {fileID: 1554935920}
-  - {fileID: 1391774795}
   - {fileID: 917688624}
   - {fileID: 1365742831}
   - {fileID: 18831969}
