@@ -55,23 +55,27 @@ public class BossAI : MonoBehaviour
         // Optional: make the boss feel "heavier"
         agent.stoppingDistance = Mathf.Max(agent.stoppingDistance, 1.2f);
     }
-    
+
     void IgnorePlayerCollisions(GameObject playerObj)
     {
-        Collider[] bossColliders = GetComponentsInChildren<Collider>();
-        Collider[] playerColliders = playerObj.GetComponentsInChildren<Collider>();
-        
+        Collider[] bossColliders = GetComponentsInChildren<Collider>(true);
+        Collider[] playerColliders = playerObj.GetComponentsInChildren<Collider>(true);
+
         foreach (Collider bossCol in bossColliders)
         {
             foreach (Collider playerCol in playerColliders)
             {
-                if (bossCol != null && playerCol != null && bossCol != playerCol)
-                {
-                    Physics.IgnoreCollision(bossCol, playerCol, true);
-                }
+                if (bossCol == null || playerCol == null) continue;
+                if (bossCol == playerCol) continue;
+
+                // IMPORTANT: don't ignore triggers (your sword/attack triggers are usually triggers)
+                if (playerCol.isTrigger) continue;
+
+                Physics.IgnoreCollision(bossCol, playerCol, true);
             }
         }
     }
+
 
     void Update()
     {
