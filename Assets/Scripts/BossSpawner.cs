@@ -60,6 +60,30 @@ public class BossSpawner : MonoBehaviour
             agent.Warp(desired);
         }
 
+        // Ensure boss doesn't block player - set up collision ignoring
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+        {
+            BossAI bossAI = boss.GetComponent<BossAI>();
+            if (bossAI != null)
+            {
+                // Call the collision ignoring method if it's public, or do it here
+                Collider[] bossColliders = boss.GetComponentsInChildren<Collider>();
+                Collider[] playerColliders = playerObj.GetComponentsInChildren<Collider>();
+                
+                foreach (Collider bossCol in bossColliders)
+                {
+                    foreach (Collider playerCol in playerColliders)
+                    {
+                        if (bossCol != null && playerCol != null && bossCol != playerCol)
+                        {
+                            Physics.IgnoreCollision(bossCol, playerCol, true);
+                        }
+                    }
+                }
+            }
+        }
+
         Debug.Log("[BossSpawner] Boss spawned!");
     }
 }

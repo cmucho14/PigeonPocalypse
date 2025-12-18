@@ -23,10 +23,30 @@ public class EnemyAI : MonoBehaviour
         if (playerObj != null)
         {
             player = playerObj.transform;
+            
+            // Ignore collisions with player so enemies don't push the player
+            IgnorePlayerCollisions(playerObj);
         }
         else
         {
             Debug.LogWarning("EnemyAI: No object with tag 'Player' found. AI will idle until one exists.");
+        }
+    }
+    
+    void IgnorePlayerCollisions(GameObject playerObj)
+    {
+        Collider[] enemyColliders = GetComponentsInChildren<Collider>();
+        Collider[] playerColliders = playerObj.GetComponentsInChildren<Collider>();
+        
+        foreach (Collider enemyCol in enemyColliders)
+        {
+            foreach (Collider playerCol in playerColliders)
+            {
+                if (enemyCol != null && playerCol != null && enemyCol != playerCol)
+                {
+                    Physics.IgnoreCollision(enemyCol, playerCol, true);
+                }
+            }
         }
     }
 
@@ -67,5 +87,8 @@ public class EnemyAI : MonoBehaviour
         {
             Debug.LogWarning("EnemyAI: Player has no Health Component to damage.");
         }
+
     }
+    //revert
+
 }

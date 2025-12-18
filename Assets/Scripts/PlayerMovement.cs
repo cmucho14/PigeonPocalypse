@@ -36,17 +36,61 @@ public class PlayerMovement : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         
         // Add a collider if missing
-        if (GetComponent<Collider>() == null)
+        Collider playerCollider = GetComponent<Collider>();
+        if (playerCollider == null)
         {
             var col = gameObject.AddComponent<CapsuleCollider>();
             col.height = 2f;
             col.radius = 0.5f;
             col.center = Vector3.up;
+            playerCollider = col;
         }
+        
+        // Note: Collision ignoring with enemies is handled in EnemyAI.Start() and BossAI.Start()
+        // when enemies spawn, so we don't need to do it here
         
         // Try to find Animator on this object or children if not assigned
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
+    }
+    
+    void Start()
+    {
+        // Ensure animator is found and enabled
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+        
+        // Initialize animator parameters to zero on start to ensure animator is ready
+        if (animator != null)
+        {
+            // Force animator to update immediately
+            animator.enabled = true;
+            animator.Update(0f); // Force an update to ensure it's ready
+            animator.SetFloat(speedParam, 0f);
+            animator.SetFloat(directionXParam, 0f);
+            animator.SetFloat(directionYParam, 0f);
+        }
+        else
+        {
+            Debug.LogWarning("PlayerMovement: Animator not found! Animation will not work.");
+        }
+    }
+    
+    // Call this method when new enemies are spawned to ignore collisions with them
+    public void IgnoreCollisionWithEnemy(GameObject enemy)
+    {
+        Collider playerCollider = GetComponent<Collider>();
+        if (playerCollider != null && enemy != null)
+        {
+            Collider[] enemyColliders = enemy.GetComponentsInChildren<Collider>();
+            foreach (Collider enemyCol in enemyColliders)
+            {
+                if (enemyCol != null)
+                {
+                    Physics.IgnoreCollision(playerCollider, enemyCol, true);
+                }
+            }
+        }
     }
     
     void Update()
@@ -60,6 +104,23 @@ public class PlayerMovement : MonoBehaviour
         
         // Movement direction
         Vector3 movement = new Vector3(horizontal, 0f, vertical).normalized;
+        
+        // Update animator parameters FIRST, before movement/rotation
+        // This ensures animation responds immediately to input
+        if (animator != null && animator.enabled)
+        {
+            // Calculate speed from input directly (immediate response)
+            float inputSpeed = movement.magnitude > 0.1f ? moveSpeed : 0f;
+            animator.SetFloat(speedParam, inputSpeed);
+            
+            // Calculate direction relative to player's CURRENT forward direction
+            // Use the player's current rotation (before we rotate it)
+            Vector3 localMovement = transform.InverseTransformDirection(movement);
+            
+            // For 2D Blend Tree: X = left/right (-1 to 1), Y = forward/backward (-1 to 1)
+            animator.SetFloat(directionXParam, localMovement.x);
+            animator.SetFloat(directionYParam, localMovement.z);
+        }
         
         // Apply movement
         Vector3 velocity = movement * moveSpeed;
@@ -79,25 +140,9 @@ public class PlayerMovement : MonoBehaviour
         }
         
         // Attack input (left mouse button)
-        if (Input.GetMouseButtonDown(0) && animator != null)
+        if (Input.GetMouseButtonDown(0) && animator != null && animator.enabled)
         {
             animator.SetTrigger(attackTrigger);
-        }
-        
-        // Update animator parameters
-        if (animator != null)
-        {
-            // Calculate speed (horizontal movement magnitude)
-            float horizontalSpeed = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
-            animator.SetFloat(speedParam, horizontalSpeed);
-            
-            // Calculate direction relative to player's forward direction
-            // Convert world-space input to local space relative to player's rotation
-            Vector3 localMovement = transform.InverseTransformDirection(movement);
-            
-            // For 2D Blend Tree: X = left/right (-1 to 1), Y = forward/backward (-1 to 1)
-            animator.SetFloat(directionXParam, localMovement.x);
-            animator.SetFloat(directionYParam, localMovement.z);
         }
     }
     
