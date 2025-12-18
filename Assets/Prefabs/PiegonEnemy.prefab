@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -2733458001294664580}
   - component: {fileID: 6746537947693744550}
   - component: {fileID: 4411048983981604521}
+  - component: {fileID: 3600512097989480934}
   m_Layer: 6
   m_Name: PiegonEnemy
   m_TagString: Untagged
@@ -137,6 +138,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xpOnDeath: 5
+--- !u!54 &3600512097989480934
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6972628887029164761}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1001 &8152070738458610958
 PrefabInstance:
   m_ObjectHideFlags: 0
