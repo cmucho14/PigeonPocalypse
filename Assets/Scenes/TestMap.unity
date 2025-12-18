@@ -6231,67 +6231,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1001 &543562733
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 100000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_Name
-      value: Props_Traffic Control Barrier Fence (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 72.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 484404636ac422042a24ac95512dc2d3,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1438507400}
-  m_SourcePrefab: {fileID: 100100000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
 --- !u!1001 &557938075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6682,33 +6621,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4359288510819847527, guid: fe6c2ca4ac3c62d47a92606f97ccc50e, type: 3}
---- !u!1 &601705142 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 484404636ac422042a24ac95512dc2d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1214698397}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &601705143
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 601705142}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 5, y: 5, z: 0.20000002}
-  m_Center: {x: 0, y: 1.0230794, z: -0.00000026077032}
 --- !u!1001 &603510064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8115,67 +8027,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 524885963}
   m_SourcePrefab: {fileID: 100100000, guid: 3ce748fa3d9bca54a98c29c0d9497d4f, type: 3}
---- !u!1001 &716825693
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 100000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_Name
-      value: Props_Traffic Control Barrier Fence (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 72.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 484404636ac422042a24ac95512dc2d3,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1510098384}
-  m_SourcePrefab: {fileID: 100100000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
 --- !u!1 &719105076 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d7e00f01457c3394e8da1c9b6d0b9618,
@@ -9799,8 +9650,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 369454438}
   height: 5
-  distance: 10
+  defaultDistance: 6
+  minDistance: 3
   angle: 30
+  wallCheckDistance: 8
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  distanceAdjustSpeed: 5
   positionSmoothSpeed: 5
   rotationSmoothSpeed: 2
   directionSmoothSpeed: 3
@@ -11961,67 +11818,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3498205008060649856, guid: a590a80bad6af8a4eaa19194133619d0, type: 3}
---- !u!1001 &1214698397
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 100000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_Name
-      value: Props_Traffic Control Barrier Fence (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 72.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 484404636ac422042a24ac95512dc2d3,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 601705143}
-  m_SourcePrefab: {fileID: 100100000, guid: 484404636ac422042a24ac95512dc2d3, type: 3}
 --- !u!1001 &1226111031
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14214,33 +14010,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 245436443}
   m_SourcePrefab: {fileID: 100100000, guid: b447369acae9efc40b035dbee56c8851, type: 3}
---- !u!1 &1438507399 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 484404636ac422042a24ac95512dc2d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 543562733}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1438507400
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1438507399}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 5, y: 5, z: 0.20000002}
-  m_Center: {x: 0, y: 1.0230794, z: -0.00000026077032}
 --- !u!1 &1440177379 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 881131606133366919, guid: f7ff35a5deb7e914fabf51eee4e649a6,
@@ -14639,33 +14408,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4356901771849843921, guid: d2a60a76befad44449f29737a21acbe0, type: 3}
---- !u!1 &1510098383 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 484404636ac422042a24ac95512dc2d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 716825693}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1510098384
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1510098383}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 5, y: 5, z: 0.20000002}
-  m_Center: {x: 0, y: 1.0230794, z: -0.00000026077032}
 --- !u!1001 &1526759434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22305,11 +22047,8 @@ SceneRoots:
   - {fileID: 711243958}
   - {fileID: 119317244}
   - {fileID: 1824506214}
-  - {fileID: 543562733}
   - {fileID: 636249661}
   - {fileID: 1591469013}
-  - {fileID: 1214698397}
-  - {fileID: 716825693}
   - {fileID: 700539502}
   - {fileID: 18831969}
   - {fileID: 1391774795}
