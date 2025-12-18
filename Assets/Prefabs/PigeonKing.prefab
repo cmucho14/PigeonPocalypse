@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6331227971853157405}
   - component: {fileID: -2733458001294664580}
   - component: {fileID: 6746537947693744550}
+  - component: {fileID: 3109519416172754285}
   m_Layer: 6
   m_Name: PigeonKing
   m_TagString: Untagged
@@ -128,6 +129,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71233301966744e3f81e6167283cbf48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3109519416172754285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6972628887029164761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e90fbb029433b4fde98e6be35fb9aa39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winSceneName: WinScreenScene
 --- !u!1001 &2458814268657828842
 PrefabInstance:
   m_ObjectHideFlags: 0
