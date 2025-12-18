@@ -54,11 +54,6 @@ public class BossSpawner : MonoBehaviour
 
         GameObject boss = Instantiate(bossPrefab, desired, Quaternion.identity);
 
-        if (audioManager != null)
-        {
-        audioManager.PlayBossIntro();
-        }
-
         // force agent placement if present
         var agent = boss.GetComponent<NavMeshAgent>();
         if (agent != null)
