@@ -41,6 +41,12 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log($"PlayerAttack: Added AnimationEventForwarder to {animator.gameObject.name} to handle animation events.");
         }
         
+        // Warn if enemy layer is not set
+        if (enemyLayer == 0)
+        {
+            Debug.LogWarning("PlayerAttack: enemyLayer is not set! Attack will check all colliders. Please set the enemy layer in the Inspector for better performance.");
+        }
+        
         // Find hand bone if not assigned
         if (handBone == null)
         {
@@ -99,6 +105,25 @@ public class PlayerAttack : MonoBehaviour
             isAttacking = stateInfo.IsName("Attack") && stateInfo.normalizedTime < 0.9f;
         }
         
+        // Continuously check for hits during attack animation (in addition to animation event)
+        // This ensures hits are detected even if animation event isn't set up
+        if (isAttacking && !wasAttacking)
+        {
+            // Just started attacking, clear previous hits
+            hitThisAttack.Clear();
+        }
+        
+        // Check for hits continuously during the active part of the attack animation
+        if (isAttacking && animator != null)
+        {
+            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            // Check during the middle portion of the attack (when sword is swinging)
+            if (stateInfo.normalizedTime > 0.2f && stateInfo.normalizedTime < 0.8f)
+            {
+                CheckForHit();
+            }
+        }
+        
         // Clear hit list when attack ends
         if (wasAttacking && !isAttacking)
         {
@@ -120,8 +145,18 @@ public class PlayerAttack : MonoBehaviour
         
         Vector3 checkPosition = attackPoint != null ? attackPoint.position : transform.position + transform.forward * attackRange;
         
-        // Find all enemies in range
-        int hitCount = Physics.OverlapSphereNonAlloc(checkPosition, attackRadius, hitEnemies, enemyLayer);
+        // If enemyLayer is not set (all zeros), check all colliders (fallback)
+        int hitCount;
+        if (enemyLayer == 0)
+        {
+            // Fallback: check all colliders if layer mask isn't set
+            hitCount = Physics.OverlapSphereNonAlloc(checkPosition, attackRadius, hitEnemies);
+        }
+        else
+        {
+            // Find all enemies in range using layer mask
+            hitCount = Physics.OverlapSphereNonAlloc(checkPosition, attackRadius, hitEnemies, enemyLayer);
+        }
         
         bool hitAnyEnemy = false;
         for (int i = 0; i < hitCount; i++)
@@ -132,13 +167,24 @@ public class PlayerAttack : MonoBehaviour
             if (enemyCollider == null || hitThisAttack.Contains(enemyCollider))
                 continue;
             
+            // Skip if this is the player's own collider
+            if (enemyCollider.transform == transform || enemyCollider.transform.IsChildOf(transform))
+                continue;
+            
+            // Try to get Health component from the collider's GameObject or its parent
             Health enemyHealth = enemyCollider.GetComponent<Health>();
+            if (enemyHealth == null)
+            {
+                // Try parent in case collider is on a child object
+                enemyHealth = enemyCollider.GetComponentInParent<Health>();
+            }
+            
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(attackDamage);
                 hitThisAttack.Add(enemyCollider); // Mark as hit
                 hitAnyEnemy = true;
-                Debug.Log($"Player hit {enemyCollider.name} for {attackDamage} damage!");
+                Debug.Log($"Player hit {enemyCollider.name} for {attackDamage} damage! Enemy HP: {enemyHealth.currentHealth}/{enemyHealth.maxHealth}");
                 
                 // Optional: Add knockback or visual feedback here
             }
