@@ -46,32 +46,12 @@ public class PlayerMovement : MonoBehaviour
             playerCollider = col;
         }
         
-        // Ignore collisions with enemies so they don't push the player
-        IgnoreEnemyCollisions(playerCollider);
+        // Note: Collision ignoring with enemies is handled in EnemyAI.Start() and BossAI.Start()
+        // when enemies spawn, so we don't need to do it here
         
         // Try to find Animator on this object or children if not assigned
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
-    }
-    
-    void IgnoreEnemyCollisions(Collider playerCollider)
-    {
-        // Find all enemies and ignore collisions with them
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
-        {
-            Collider[] enemyColliders = enemy.GetComponentsInChildren<Collider>();
-            foreach (Collider enemyCol in enemyColliders)
-            {
-                if (enemyCol != null && enemyCol != playerCollider)
-                {
-                    Physics.IgnoreCollision(playerCollider, enemyCol, true);
-                }
-            }
-        }
-        
-        // Also set up to ignore collisions with newly spawned enemies
-        // This will be called when enemies spawn
     }
     
     // Call this method when new enemies are spawned to ignore collisions with them
