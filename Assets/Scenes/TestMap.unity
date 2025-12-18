@@ -11080,7 +11080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6972628887029164761, guid: 6fa0270d4f6f94c39a07ee75ad3af77c,
     type: 3}
-  enemiesPerWave: 0a000000140000001e000000
+  enemiesPerWave: 020000000200000002000000
   timeBetweenSpawns: 0.5
   xpPerKill: 5
   raycastDownDistance: 200
