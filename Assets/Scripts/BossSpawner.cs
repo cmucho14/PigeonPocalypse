@@ -5,7 +5,9 @@ public class BossSpawner : MonoBehaviour
 {
     [Header("References")]
     public WaveSpawnerBox waveSpawner;     // drag your EnemySpawner object here
-    public GameObject bossPrefab;          // your boss prefab
+    public GameObject bossPrefab; 
+    private AudioManager audioManager;
+         // your boss prefab
 
     [Header("Spawn")]
     public Transform spawnPoint;           // optional (can leave null)
@@ -17,6 +19,8 @@ public class BossSpawner : MonoBehaviour
     {
         if (waveSpawner == null)
             waveSpawner = FindObjectOfType<WaveSpawnerBox>();
+
+            audioManager = FindObjectOfType<AudioManager>();
     }
 
     void OnEnable()
