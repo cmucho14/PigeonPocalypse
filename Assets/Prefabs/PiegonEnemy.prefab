@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 2
-  attackDamage: 10
+  attackDamage: 5
   attackCooldown: 1.5
 --- !u!114 &-2733458001294664580
 MonoBehaviour:
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac8d9c476e2c4cc2a5f27e650ad7b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xpOnDeath: 5
+  xpOnDeath: 10
 --- !u!54 &3600512097989480934
 Rigidbody:
   m_ObjectHideFlags: 0

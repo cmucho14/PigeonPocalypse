@@ -20,7 +20,7 @@ public class EnemyStats : MonoBehaviour
             if (testMode)
             {
                 // Test mode: all enemies have 1 HP
-                h.maxHealth = 1f;
+                h.maxHealth = 20f;
             }
             else
             {

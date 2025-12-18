@@ -3,7 +3,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     public float maxHealth = 50f;
-    [HideInInspector] public float currentHealth;
+    public float currentHealth;
 
     public System.Action onDeath;
     public System.Action<float, float> onHealthChanged; // current, max
@@ -23,6 +23,8 @@ public class Health : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
+        Debug.Log($"[ENEMY HEALTH] {gameObject.name}: {currentHealth}/{maxHealth}");
+
         onHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (currentHealth <= 0f)
@@ -34,10 +36,13 @@ public class Health : MonoBehaviour
         if (isDead) return;
         isDead = true;
 
-        // Award XP if this object has an EnemyXPReward component
+        Debug.Log($"[ENEMY DEAD] {gameObject.name} died");
+
         EnemyXPReward reward = GetComponent<EnemyXPReward>();
-        if (reward != null && reward.xpOnDeath > 0)
+        if (reward != null)
         {
+            Debug.Log($"[XP DROP] {gameObject.name} dropping {reward.xpOnDeath} XP");
+
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
             {
@@ -46,7 +51,19 @@ public class Health : MonoBehaviour
                 {
                     xp.AddXP(reward.xpOnDeath);
                 }
+                else
+                {
+                    Debug.LogWarning("[XP ERROR] Player has no PlayerXP component");
+                }
             }
+            else
+            {
+                Debug.LogWarning("[XP ERROR] No Player object found");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[XP WARNING] Enemy has no EnemyXPReward component");
         }
 
         onDeath?.Invoke();
