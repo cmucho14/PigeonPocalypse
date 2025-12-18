@@ -43,11 +43,34 @@ public class BossAI : MonoBehaviour
         beakAnim = GetComponentInChildren<BeakSlamAnim>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null) player = playerObj.transform;
+        if (playerObj != null)
+        {
+            player = playerObj.transform;
+            
+            // Ignore collisions with player so boss doesn't push the player
+            IgnorePlayerCollisions(playerObj);
+        }
         else Debug.LogWarning("BossAI: No object with tag 'Player' found.");
 
-        // Optional: make the boss feel “heavier”
+        // Optional: make the boss feel "heavier"
         agent.stoppingDistance = Mathf.Max(agent.stoppingDistance, 1.2f);
+    }
+    
+    void IgnorePlayerCollisions(GameObject playerObj)
+    {
+        Collider[] bossColliders = GetComponentsInChildren<Collider>();
+        Collider[] playerColliders = playerObj.GetComponentsInChildren<Collider>();
+        
+        foreach (Collider bossCol in bossColliders)
+        {
+            foreach (Collider playerCol in playerColliders)
+            {
+                if (bossCol != null && playerCol != null && bossCol != playerCol)
+                {
+                    Physics.IgnoreCollision(bossCol, playerCol, true);
+                }
+            }
+        }
     }
 
     void Update()

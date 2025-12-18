@@ -36,17 +36,39 @@ public class PlayerMovement : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         
         // Add a collider if missing
-        if (GetComponent<Collider>() == null)
+        Collider playerCollider = GetComponent<Collider>();
+        if (playerCollider == null)
         {
             var col = gameObject.AddComponent<CapsuleCollider>();
             col.height = 2f;
             col.radius = 0.5f;
             col.center = Vector3.up;
+            playerCollider = col;
         }
+        
+        // Note: Collision ignoring with enemies is handled in EnemyAI.Start() and BossAI.Start()
+        // when enemies spawn, so we don't need to do it here
         
         // Try to find Animator on this object or children if not assigned
         if (animator == null)
             animator = GetComponentInChildren<Animator>();
+    }
+    
+    // Call this method when new enemies are spawned to ignore collisions with them
+    public void IgnoreCollisionWithEnemy(GameObject enemy)
+    {
+        Collider playerCollider = GetComponent<Collider>();
+        if (playerCollider != null && enemy != null)
+        {
+            Collider[] enemyColliders = enemy.GetComponentsInChildren<Collider>();
+            foreach (Collider enemyCol in enemyColliders)
+            {
+                if (enemyCol != null)
+                {
+                    Physics.IgnoreCollision(playerCollider, enemyCol, true);
+                }
+            }
+        }
     }
     
     void Update()

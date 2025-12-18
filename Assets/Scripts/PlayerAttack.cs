@@ -58,6 +58,13 @@ public class PlayerAttack : MonoBehaviour
             swordInstance.transform.localPosition = Vector3.zero;
             swordInstance.transform.localRotation = Quaternion.identity;
             
+            // Make all colliders on the sword triggers so they don't physically block enemies
+            Collider[] swordColliders = swordInstance.GetComponentsInChildren<Collider>();
+            foreach (Collider col in swordColliders)
+            {
+                col.isTrigger = true;
+            }
+            
             // Set attack point to sword tip if available, otherwise use hand position
             if (attackPoint == null)
             {
