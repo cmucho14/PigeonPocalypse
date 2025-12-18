@@ -8,6 +8,10 @@ public class AudioManager : MonoBehaviour
     [Header("One-shot SFX Source")]
     public AudioSource sfxSource;
 
+    [Header("Boss Intro")]
+    public AudioClip bossIntroClip;
+
+
     [Header("Enemy Death")]
     public AudioClip enemyDeathClip;
 
@@ -82,4 +86,14 @@ public class AudioManager : MonoBehaviour
                 PlayRandomPigeon();
         }
     }
+    public void PlayBossIntro()
+    {
+        if (sfxSource != null && bossIntroClip != null)
+        {
+            sfxSource.PlayOneShot(bossIntroClip);
+        }
+    }
 }
+
+
+

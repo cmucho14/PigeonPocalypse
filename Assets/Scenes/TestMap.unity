@@ -4365,7 +4365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512984c101dc3419c99cf564ad8dbdba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100000
+  maxHealth: 100
   currentHealth: 0
 --- !u!114 &369454437
 MonoBehaviour:
@@ -19029,6 +19029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 726458586}
+  bossIntroClip: {fileID: 0}
   enemyDeathClip: {fileID: 8300000, guid: 6749fea46e9c59f4ebbec6ac35b9a1e5, type: 3}
   levelUpClip: {fileID: 8300000, guid: 773c3a35bbe36084c936400996e47668, type: 3}
   slashClip: {fileID: 8300000, guid: 8a345fa1f0df2b3419a607835475e1ec, type: 3}
@@ -19036,7 +19037,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 479b376b36b5272498d594276cd23fd0, type: 3}
   pigeonMinDelay: 6
   pigeonMaxDelay: 14
-  pigeonChance: 0.8
+  pigeonChance: 0.5
 --- !u!4 &1793154255
 Transform:
   m_ObjectHideFlags: 0
