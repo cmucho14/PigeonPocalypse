@@ -6,28 +6,35 @@ public class PlayerAttack : MonoBehaviour
     public GameObject swordPrefab;
     public Transform handBone; // Assign the hand bone (e.g., Hand_R, RightHand, etc.)
     public string handBoneName = "hand.r"; // Fallback: will search for this bone name
-    
+
     [Header("Attack Settings")]
     public float attackDamage = 20f;
     public float attackRange = 2f;
     public float attackCooldown = 0.5f;
     public LayerMask enemyLayer;
-    
+
     [Header("Attack Detection")]
     public Transform attackPoint; // Optional: specific attack point (sword tip, etc.)
     public float attackRadius = 1.5f;
-    
+
     private GameObject swordInstance;
     private Animator animator;
-    private float lastAttackTime;
+    private float lastAttackTime = 0f;
     private bool isAttacking = false;
     private Collider[] hitEnemies = new Collider[10]; // Buffer for overlap checks
-    private System.Collections.Generic.HashSet<Collider> hitThisAttack = new System.Collections.Generic.HashSet<Collider>();
-    
+    private System.Collections.Generic.HashSet<Health> hitThisAttack =
+        new System.Collections.Generic.HashSet<Health>();
+    [SerializeField] private string enemyLayerName = "Enemy";
+
+
     void Start()
     {
+        // Auto-set enemy layer mask so you don't need to wire it in Inspector
+        enemyLayer = LayerMask.GetMask(enemyLayerName);
+        Debug.Log($"[PlayerAttack] enemyLayer mask set to '{enemyLayerName}' = {enemyLayer.value}");
+
         animator = GetComponentInChildren<Animator>();
-        
+
         // If Animator is on a different GameObject, add a helper component there to forward animation events
         if (animator != null && animator.gameObject != gameObject)
         {
@@ -40,13 +47,13 @@ public class PlayerAttack : MonoBehaviour
             forwarder.playerAttack = this;
             Debug.Log($"PlayerAttack: Added AnimationEventForwarder to {animator.gameObject.name} to handle animation events.");
         }
-        
+
         // Warn if enemy layer is not set
         if (enemyLayer == 0)
         {
             Debug.LogWarning("PlayerAttack: enemyLayer is not set! Attack will check all colliders. Please set the enemy layer in the Inspector for better performance.");
         }
-        
+
         // Find hand bone if not assigned
         if (handBone == null)
         {
@@ -56,21 +63,21 @@ public class PlayerAttack : MonoBehaviour
                 Debug.LogWarning($"PlayerAttack: Could not find bone '{handBoneName}'. Please assign handBone manually in Inspector.");
             }
         }
-        
+
         // Spawn and attach sword
         if (swordPrefab != null && handBone != null)
         {
             swordInstance = Instantiate(swordPrefab, handBone);
             swordInstance.transform.localPosition = Vector3.zero;
             swordInstance.transform.localRotation = Quaternion.identity;
-            
+
             // Make all colliders on the sword triggers so they don't physically block enemies
             Collider[] swordColliders = swordInstance.GetComponentsInChildren<Collider>();
             foreach (Collider col in swordColliders)
             {
                 col.isTrigger = true;
             }
-            
+
             // Set attack point to sword tip if available, otherwise use hand position
             if (attackPoint == null)
             {
@@ -94,43 +101,44 @@ public class PlayerAttack : MonoBehaviour
             Debug.LogWarning("PlayerAttack: No sword prefab assigned!");
         }
     }
-    
+
     void Update()
     {
-        // Check if attack animation is playing
         bool wasAttacking = isAttacking;
+
         if (animator != null)
         {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            isAttacking = stateInfo.IsName("Attack") && stateInfo.normalizedTime < 0.9f;
-        }
-        
-        // Continuously check for hits during attack animation (in addition to animation event)
-        // This ensures hits are detected even if animation event isn't set up
-        if (isAttacking && !wasAttacking)
-        {
-            // Just started attacking, clear previous hits
-            hitThisAttack.Clear();
-        }
-        
-        // Check for hits continuously during the active part of the attack animation
-        if (isAttacking && animator != null)
-        {
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            // Check during the middle portion of the attack (when sword is swinging)
-            if (stateInfo.normalizedTime > 0.2f && stateInfo.normalizedTime < 0.8f)
+            isAttacking = stateInfo.IsName("Attack") && stateInfo.normalizedTime < 0.95f;
+
+            if (isAttacking)
             {
-                CheckForHit();
+                // normalizedTime increases beyond 1 if it loops; take fractional part
+                float t = stateInfo.normalizedTime % 1f;
+
+                // If time wrapped around, a new swing started -> clear hit list
+                if (!wasAttacking || t < lastAttackTime)
+                {
+                    hitThisAttack.Clear();
+                }
+
+                lastAttackTime = t;
+
+                // Only check during the active swing window
+                if (t > 0.2f && t < 0.8f)
+                {
+                    CheckForHit();
+                }
+            }
+            else
+            {
+                lastAttackTime = 0f;
+                hitThisAttack.Clear();
             }
         }
-        
-        // Clear hit list when attack ends
-        if (wasAttacking && !isAttacking)
-        {
-            hitThisAttack.Clear();
-        }
     }
-    
+
+
     // Call this from animation event at the peak of the attack swing
     // To add animation event: Select Attack clip → Add Event → Function: OnAttackHit
     public void OnAttackHit()
@@ -139,85 +147,84 @@ public class PlayerAttack : MonoBehaviour
         AudioManager.I.PlaySlash();
         CheckForHit();
     }
-    
+
     void CheckForHit()
     {
         if (Time.time - lastAttackTime < attackCooldown)
             return;
-        
-        Vector3 checkPosition = attackPoint != null ? attackPoint.position : transform.position + transform.forward * attackRange;
-        
-        // If enemyLayer is not set (all zeros), check all colliders (fallback)
-        int hitCount;
-        if (enemyLayer == 0)
+
+        if (attackPoint == null)
         {
-            // Fallback: check all colliders if layer mask isn't set
-            hitCount = Physics.OverlapSphereNonAlloc(checkPosition, attackRadius, hitEnemies);
+            Debug.LogWarning("[Attack] attackPoint is null.");
+            return;
         }
-        else
-        {
-            // Find all enemies in range using layer mask
-            hitCount = Physics.OverlapSphereNonAlloc(checkPosition, attackRadius, hitEnemies, enemyLayer);
-        }
-        
-        bool hitAnyEnemy = false;
+
+        // Use attackPoint as the hitbox center
+        Vector3 center = attackPoint.position;
+
+        // BIGGER buffer so terrain/props don’t crowd out the boss
+        // (You can set this at the top too; keeping it here is fine while debugging)
+        if (hitEnemies == null || hitEnemies.Length < 64)
+            hitEnemies = new Collider[64];
+
+        // Only check enemy layer (your Start() already forces it)
+        int hitCount = Physics.OverlapSphereNonAlloc(
+            center, attackRadius, hitEnemies, enemyLayer, QueryTriggerInteraction.Collide);
+
+        bool hitAny = false;
+
         for (int i = 0; i < hitCount; i++)
         {
-            Collider enemyCollider = hitEnemies[i];
-            
-            // Skip if null or already hit in this attack
-            if (enemyCollider == null || hitThisAttack.Contains(enemyCollider))
+            Collider c = hitEnemies[i];
+            if (c == null) continue;
+
+            // Ignore player self
+            if (c.transform == transform || c.transform.IsChildOf(transform))
                 continue;
-            
-            // Skip if this is the player's own collider
-            if (enemyCollider.transform == transform || enemyCollider.transform.IsChildOf(transform))
+
+            // Find Health on collider OR parent (boss usually has Health on root)
+            Health h = c.GetComponentInParent<Health>();
+            if (h == null) continue;
+
+            // IMPORTANT: Track by HEALTH, not collider, so boss with multiple colliders works
+            // Change your field to HashSet<Health> at the top:
+            // private HashSet<Health> hitThisAttack = new HashSet<Health>();
+            if (hitThisAttack.Contains(h))
                 continue;
-            
-            // Try to get Health component from the collider's GameObject or its parent
-            Health enemyHealth = enemyCollider.GetComponent<Health>();
-            if (enemyHealth == null)
-            {
-                // Try parent in case collider is on a child object
-                enemyHealth = enemyCollider.GetComponentInParent<Health>();
-            }
-            
-            if (enemyHealth != null)
-            {
-                enemyHealth.TakeDamage(attackDamage);
-                hitThisAttack.Add(enemyCollider); // Mark as hit
-                hitAnyEnemy = true;
-                Debug.Log($"Player hit {enemyCollider.name} for {attackDamage} damage! Enemy HP: {enemyHealth.currentHealth}/{enemyHealth.maxHealth}");
-                
-                // Optional: Add knockback or visual feedback here
-            }
+
+            h.TakeDamage(attackDamage);
+            Debug.Log($"[Attack] HIT {h.gameObject.name} for {attackDamage}. HP={h.currentHealth}/{h.maxHealth}");
+
+            hitThisAttack.Add(h);
+            hitAny = true;
         }
-        
-        if (hitAnyEnemy)
-        {
+
+        if (hitAny)
             lastAttackTime = Time.time;
-        }
     }
-    
+
+
+
     Transform FindBoneByName(string boneName)
     {
         // Search in all children recursively
         return FindBoneRecursive(transform, boneName);
     }
-    
+
     Transform FindBoneRecursive(Transform parent, string name)
     {
         foreach (Transform child in parent)
         {
             if (child.name.Contains(name))
                 return child;
-            
+
             Transform found = FindBoneRecursive(child, name);
             if (found != null)
                 return found;
         }
         return null;
     }
-    
+
     // Visualize attack range in editor
     void OnDrawGizmosSelected()
     {

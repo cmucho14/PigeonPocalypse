@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7437903848211579793}
-  - component: {fileID: 6522728800449971968}
+  - component: {fileID: 6094135126932592674}
   - component: {fileID: 2487249844655276350}
   - component: {fileID: 6331227971853157405}
   - component: {fileID: -2733458001294664580}
@@ -37,8 +37,8 @@ Transform:
   - {fileID: 218115795118847519}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &6522728800449971968
-CapsuleCollider:
+--- !u!65 &6094135126932592674
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -47,7 +47,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -55,11 +55,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 1.2, z: 1.25}
+  m_Center: {x: 0, y: 0.6, z: -0.2}
 --- !u!195 &2487249844655276350
 NavMeshAgent:
   m_ObjectHideFlags: 0
