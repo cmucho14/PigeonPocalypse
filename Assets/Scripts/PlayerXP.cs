@@ -31,6 +31,11 @@ public class PlayerXP : MonoBehaviour
         onXPChanged?.Invoke(xp, xpToNext, level);
 
         if (leveledUp)
+        {
+            Debug.Log($"[LEVEL UP EVENT] Level is now {level}");
             onLevelUp?.Invoke(level);
+            Debug.Log("[LEVEL UP EVENT] Handler finished");
+        }
+
     }
 }

@@ -45,12 +45,24 @@ public class LevelUpUI : MonoBehaviour
         if (choosing) return;
 
         choosing = true;
-        Time.timeScale = 0f;
 
-        if (levelUpPanel != null) levelUpPanel.SetActive(true);
+        Debug.Log($"[LevelUpUI] panel ref = {(levelUpPanel ? levelUpPanel.name : "NULL")}");
+
+        if (levelUpPanel == null)
+        {
+            Debug.LogError("[LevelUpUI] levelUpPanel is NOT assigned. Unpausing so game doesn't freeze.");
+            choosing = false;
+            return;
+        }
+
+        levelUpPanel.SetActive(true);
+        Debug.Log($"[LevelUpUI] panel activeSelf AFTER SetActive(true) = {levelUpPanel.activeSelf}");
+
+        Time.timeScale = 0f;
 
         Debug.Log("LEVEL UP -> " + newLevel);
     }
+
 
     public void ChooseSpeed()
     {
