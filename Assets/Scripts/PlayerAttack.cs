@@ -135,6 +135,8 @@ public class PlayerAttack : MonoBehaviour
     // To add animation event: Select Attack clip → Add Event → Function: OnAttackHit
     public void OnAttackHit()
     {
+        if (AudioManager.I != null)
+        AudioManager.I.PlaySlash();
         CheckForHit();
     }
     

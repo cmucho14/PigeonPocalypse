@@ -19,10 +19,10 @@ public class WaveSpawnerBox : MonoBehaviour
     private PlayerXP playerXP;
 
     [Header("Tree Drop Settings")]
-    public float raycastDownDistance = 200f;     // how far down we search for ground
-    public LayerMask groundLayers = ~0;          // set to your ground layer if you want
-    public float navMeshSampleRadius = 3f;       // snap radius onto navmesh
-    public float spawnYOffset = 0.1f;            // lift a tiny bit above navmesh
+    public float raycastDownDistance = 200f;
+    public LayerMask groundLayers = ~0;
+    public float navMeshSampleRadius = 3f;
+    public float spawnYOffset = 0.1f;
 
     public System.Action onAllWavesComplete;
 
@@ -38,7 +38,6 @@ public class WaveSpawnerBox : MonoBehaviour
 
     void Start()
     {
-        // Cache player XP once
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -85,8 +84,6 @@ public class WaveSpawnerBox : MonoBehaviour
     {
         int spawned = 0;
         int tries = 0;
-
-        // Prevent infinite loop if your box is over invalid space
         int maxTries = count * 10;
 
         while (spawned < count && tries < maxTries)
@@ -101,12 +98,10 @@ public class WaveSpawnerBox : MonoBehaviour
             var agent = enemy.GetComponent<NavMeshAgent>();
             if (agent != null)
             {
-                // Prevent first-frame placement weirdness
                 agent.enabled = false;
                 enemy.transform.position = spawnPos;
                 agent.enabled = true;
-
-                agent.Warp(spawnPos); // guarantees on-mesh
+                agent.Warp(spawnPos);
             }
 
             EnemyStats stats = enemy.GetComponent<EnemyStats>();
@@ -120,11 +115,15 @@ public class WaveSpawnerBox : MonoBehaviour
             Health h = enemy.GetComponent<Health>();
             if (h != null)
             {
-                // When enemy dies: decrement alive count + give XP
                 h.onDeath += () =>
                 {
                     enemiesAlive--;
 
+                    // ✅ Enemy death sound
+                    if (AudioManager.I != null)
+                        AudioManager.I.PlayEnemyDeath();
+
+                    // XP
                     if (playerXP != null)
                         playerXP.AddXP(xpPerKill);
                 };
@@ -150,16 +149,13 @@ public class WaveSpawnerBox : MonoBehaviour
     {
         navSpawn = Vector3.zero;
 
-        // 1) pick random point in the tree-top box
         Vector3 random = GetRandomPointInBoxWorld();
 
-        // 2) raycast straight down to find ground
         if (!Physics.Raycast(random, Vector3.down, out RaycastHit hit, raycastDownDistance, groundLayers, QueryTriggerInteraction.Ignore))
             return false;
 
         Vector3 groundPoint = hit.point;
 
-        // 3) snap that ground point to the navmesh
         if (!NavMesh.SamplePosition(groundPoint, out NavMeshHit navHit, navMeshSampleRadius, NavMesh.AllAreas))
             return false;
 

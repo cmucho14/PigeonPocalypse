@@ -6,8 +6,8 @@ public class PlayerXP : MonoBehaviour
     public int xp = 0;
     public int xpToNext = 25;
 
-    public System.Action<int, int, int> onXPChanged; // xp, xpToNext, level
-    public System.Action<int> onLevelUp;             // NEW: fires when level increases (passes new level)
+    public System.Action<int, int, int> onXPChanged;
+    public System.Action<int> onLevelUp;
 
     private void Start()
     {
@@ -32,10 +32,14 @@ public class PlayerXP : MonoBehaviour
 
         if (leveledUp)
         {
+            // ✅ Level up sound
+            if (AudioManager.I != null)
+                AudioManager.I.PlayLevelUp();
+
             Debug.Log($"[LEVEL UP EVENT] Level is now {level}");
             onLevelUp?.Invoke(level);
             Debug.Log("[LEVEL UP EVENT] Handler finished");
         }
-
     }
 }
+
