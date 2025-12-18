@@ -16,9 +16,8 @@ public class PlayerXP : MonoBehaviour
 
     public void AddXP(int amount)
     {
-        Debug.Log($"[XP GAIN] Player gained {amount} XP");
-
         xp += amount;
+
         bool leveledUp = false;
 
         while (xp >= xpToNext)
@@ -27,11 +26,7 @@ public class PlayerXP : MonoBehaviour
             level++;
             xpToNext = Mathf.RoundToInt(xpToNext * 1.25f);
             leveledUp = true;
-
-            Debug.Log($"[LEVEL UP] Player is now level {level}");
         }
-
-        Debug.Log($"[XP STATUS] XP: {xp}/{xpToNext} | Level: {level}");
 
         onXPChanged?.Invoke(xp, xpToNext, level);
 

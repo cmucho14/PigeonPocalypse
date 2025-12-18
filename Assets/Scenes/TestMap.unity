@@ -647,6 +647,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 369454440}
+    - targetCorrespondingSourceObject: {fileID: 8702267591608313500, guid: e792b5f59bf315845ab4fbb393f59b18,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 369454441}
   m_SourcePrefab: {fileID: 100100000, guid: e792b5f59bf315845ab4fbb393f59b18, type: 3}
 --- !u!1 &369454435 stripped
 GameObject:
@@ -741,6 +745,19 @@ MonoBehaviour:
   level: 1
   xp: 0
   xpToNext: 80
+--- !u!114 &369454441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369454435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15aa7297d386bed41ba805f66bfefee8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageMultiplier: 1
 --- !u!1 &679376355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,8 +1407,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 369454438}
-  offset: {x: 0, y: 5, z: -10}
-  smoothSpeed: 5
+  height: 5
+  distance: 10
+  angle: 30
+  positionSmoothSpeed: 5
+  rotationSmoothSpeed: 5
+  lookOffset: {x: 0, y: 1, z: 0}
 --- !u!1 &975240891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1929,7 +1950,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1228608291}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1905240531}
+        m_TargetAssemblyTypeName: LevelUpUI, Assembly-CSharp
+        m_MethodName: ChooseDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1228608291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2050,7 +2083,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1314683668}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1905240531}
+        m_TargetAssemblyTypeName: LevelUpUI, Assembly-CSharp
+        m_MethodName: ChooseSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1314683668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3309,7 +3354,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1791206256}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1905240531}
+        m_TargetAssemblyTypeName: LevelUpUI, Assembly-CSharp
+        m_MethodName: ChooseHealth
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1791206256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3482,6 +3539,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5cd0ad272fab6419030c15959e30a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelUpPanel: {fileID: 87147249}
+  speedIncrease: 1
+  healthIncrease: 10
+  damageIncrease: 0.25
 --- !u!1 &1914621716
 GameObject:
   m_ObjectHideFlags: 0
