@@ -80,14 +80,32 @@ public class PlayerMovement : MonoBehaviour
         // Ground check using SphereCast for reliability
         isGrounded = CheckGrounded();
         
-        // Movement direction
+        // Movement direction in world space
         Vector3 movement = new Vector3(horizontal, 0f, vertical).normalized;
         
-        // Apply movement
-        Vector3 velocity = movement * moveSpeed;
-        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+        // Calculate animator direction parameters BEFORE rotating the player
+        // This way the blend tree gets the correct direction relative to player's current facing
+        if (animator != null)
+        {
+            // Convert world-space input to local space relative to player's CURRENT rotation
+            // This needs to happen before we rotate the player to face movement direction
+            Vector3 localMovement = transform.InverseTransformDirection(movement);
+            
+            // For 2D Blend Tree: X = left/right (-1 to 1), Y = forward/backward (-1 to 1)
+            animator.SetFloat(directionXParam, localMovement.x);
+            animator.SetFloat(directionYParam, localMovement.z);
+            
+            // Calculate speed (horizontal movement magnitude)
+            float horizontalSpeed = movement.magnitude > 0.1f ? moveSpeed : 0f;
+            animator.SetFloat(speedParam, horizontalSpeed);
+        }
         
-        // Rotate player to face movement direction
+        // Apply movement in world space (relative to world, not player rotation)
+        // This allows the player to move in any direction while facing forward
+        Vector3 worldMovement = movement * moveSpeed;
+        rb.velocity = new Vector3(worldMovement.x, rb.velocity.y, worldMovement.z);
+        
+        // Rotate player to face movement direction (but only if moving)
         if (movement.magnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(movement, Vector3.up);
@@ -104,22 +122,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && animator != null)
         {
             animator.SetTrigger(attackTrigger);
-        }
-        
-        // Update animator parameters
-        if (animator != null)
-        {
-            // Calculate speed (horizontal movement magnitude)
-            float horizontalSpeed = new Vector2(rb.velocity.x, rb.velocity.z).magnitude;
-            animator.SetFloat(speedParam, horizontalSpeed);
-            
-            // Calculate direction relative to player's forward direction
-            // Convert world-space input to local space relative to player's rotation
-            Vector3 localMovement = transform.InverseTransformDirection(movement);
-            
-            // For 2D Blend Tree: X = left/right (-1 to 1), Y = forward/backward (-1 to 1)
-            animator.SetFloat(directionXParam, localMovement.x);
-            animator.SetFloat(directionYParam, localMovement.z);
         }
     }
     
