@@ -28,13 +28,11 @@ Enemy System
 - Pigeon enemies spawn in waves and aggressively chase the player
 - Difficulty scales over time: increased health, speed, damage, and spawn rate
 - Enemies use NavMesh pathfinding to intelligently pursue the player
-- Boss pigeons spawn at milestone waves (planned)
+- Boss pigeons spawn at milestone waves
 
 Combat & Progression
-- Players start with basic attacks and gain better equipment over time
 - XP earned from defeating enemies and surviving waves
-- Level ups grant skill points for upgrading attributes
-- Loot system with chests and trader NPCs (planned)
+- Level ups grant skill points for upgrading attributes speed, damage, and health
 
 HUD & UI
 - Health bar display
@@ -64,9 +62,8 @@ Member Goals
 
 Brody Armstrong — Player Design
 - [ ] Player attack/combat system
-- [ ] Weapon equipping and switching
 - [ ] Player animations
-- [ ] Dodge/roll mechanic
+- [ ] directional movement and jumping mechanic
 
 Carson Mucho — Enemy AI & Combat
 - [ ] Wave spawning system
@@ -84,7 +81,6 @@ Emily Stratoudis — UI/UX Design
 Lachlan Carlsen — Art & Level Design
 - [ ] Additional biomes/arenas
 - [ ] Visual effects (particles, lighting)
-- [ ] Enemy visual variants
 - [ ] Environmental hazards/obstacles
 
 Video Link:
