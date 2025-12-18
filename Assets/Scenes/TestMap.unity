@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.09000637, g: 0.07317675, b: 0.1458521, a: 1}
+  m_IndirectSpecularColor: {r: 0.08987087, g: 0.07304085, b: 0.14571361, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 3083e2716f9b04d629fe6b424de25084,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -22814,25 +22815,20 @@ SceneRoots:
   - {fileID: 1554935920}
   - {fileID: 917688624}
   - {fileID: 1365742831}
-  - {fileID: 18831969}
   - {fileID: 1598692497}
   - {fileID: 209910067}
   - {fileID: 1829087193}
   - {fileID: 962175570}
   - {fileID: 298603214}
   - {fileID: 1630272639}
-  - {fileID: 700539502}
   - {fileID: 1289387580}
   - {fileID: 185197490}
   - {fileID: 181165485}
   - {fileID: 1764450877}
-  - {fileID: 1502623190}
   - {fileID: 511402134}
   - {fileID: 1135409970}
   - {fileID: 1226111031}
   - {fileID: 985504249}
-  - {fileID: 119317244}
-  - {fileID: 637656802}
   - {fileID: 636511874}
   - {fileID: 1830455110}
   - {fileID: 1604552965}
@@ -22860,7 +22856,6 @@ SceneRoots:
   - {fileID: 2085432926}
   - {fileID: 1654914037}
   - {fileID: 2129289885}
-  - {fileID: 543562733}
   - {fileID: 1399738967}
   - {fileID: 697749595}
   - {fileID: 1584200118}
@@ -22868,12 +22863,10 @@ SceneRoots:
   - {fileID: 490740081}
   - {fileID: 1570735226}
   - {fileID: 1242195519}
-  - {fileID: 1618764019}
   - {fileID: 1777456437}
   - {fileID: 128826725}
   - {fileID: 450644397}
   - {fileID: 273802720}
-  - {fileID: 2357380}
   - {fileID: 1042465266}
   - {fileID: 1724151417}
   - {fileID: 1611196560}
@@ -22890,10 +22883,8 @@ SceneRoots:
   - {fileID: 2122099917}
   - {fileID: 1002761895}
   - {fileID: 733049198}
-  - {fileID: 636249661}
   - {fileID: 603510064}
   - {fileID: 1890107532}
-  - {fileID: 1591469013}
   - {fileID: 363655628}
   - {fileID: 1963151473}
   - {fileID: 1650603342}
@@ -22910,19 +22901,15 @@ SceneRoots:
   - {fileID: 110797904}
   - {fileID: 134019145}
   - {fileID: 1608601375}
-  - {fileID: 1824506214}
   - {fileID: 815787979}
   - {fileID: 1616418506}
   - {fileID: 955871420}
-  - {fileID: 711243958}
   - {fileID: 12278120}
   - {fileID: 980462621}
-  - {fileID: 716825693}
   - {fileID: 1346921806}
   - {fileID: 507152342}
   - {fileID: 776407461}
   - {fileID: 680966346}
-  - {fileID: 1214698397}
   - {fileID: 2055527075}
   - {fileID: 1286892877}
   - {fileID: 435696788}
